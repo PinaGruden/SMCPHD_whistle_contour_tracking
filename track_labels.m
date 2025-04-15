@@ -1,8 +1,12 @@
-function [ Track ] = track_labels(XTag,Xk,model)
+function [ Track ] = track_labels(XTag,Xk,model,t)
 %track_labels.m is a function that finds estimated states with the same
 %label and collects them into tracks.
 
 %Pina Gruden, ISVR, 2017
+
+if nargin<4
+t=0:model.dt:size(XTag,2)*model.dt-model.dt;
+end
 
 IDlist= unique([XTag{:}]);
 N=numel(IDlist); %number of all tracks
@@ -16,8 +20,6 @@ Track(N).chirp =[];
 Track(N).time =[];
 Track(N).label =[];
 Track(N).ti =[];
-
-t=0:model.dt:size(XTag,2)*model.dt-model.dt;
 
 for k=1:size(XTag,2)
     
